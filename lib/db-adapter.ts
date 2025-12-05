@@ -5,7 +5,9 @@
 
 import type { Product, ProductFilter, PriceStats as PriceStatsType, ProviderStats } from '@/types';
 
-const useFirebase = Boolean(process.env.FIREBASE_PROJECT_ID);
+// En Vercel no queremos SQLite: si hay FIREBASE_PROJECT_ID o estamos en Vercel, usamos Firebase.
+const isVercel = process.env.VERCEL === '1';
+const useFirebase = Boolean(process.env.FIREBASE_PROJECT_ID || isVercel);
 
 type DBModule = {
   getProducts: (filters?: ProductFilter, limit?: number, offset?: number) => Promise<Product[]> | Product[];
