@@ -1,0 +1,155 @@
+{
+  "products": [
+    {
+      "url": "https://www.supermat.com.ar/producto-ejemplo-1",
+      "nombre": "Taladro Percutor 13mm 650W",
+      "precio": 89990,
+      "descuento": "15%",
+      "categoria": "Herramientas > Eléctricas > Taladros",
+      "proveedor": "Supermat",
+      "status": "OK",
+      "precioLista": 105882
+    },
+    {
+      "url": "https://www.elamigo.com.ar/producto-ejemplo-1",
+      "nombre": "Taladro Percutor 13mm 650W",
+      "precio": 92500,
+      "descuento": "10%",
+      "categoria": "Herramientas > Eléctricas > Taladros",
+      "proveedor": "El Amigo",
+      "status": "OK",
+      "precioLista": 102778
+    },
+    {
+      "url": "https://www.unimax.com.ar/producto-ejemplo-1",
+      "nombre": "Taladro Percutor 13mm 650W",
+      "precio": 95000,
+      "descuento": "",
+      "categoria": "Herramientas > Eléctricas > Taladros",
+      "proveedor": "Unimax",
+      "status": "OK",
+      "precioLista": null
+    },
+    {
+      "url": "https://www.supermat.com.ar/producto-ejemplo-2",
+      "nombre": "Amoladora Angular 115mm 900W",
+      "precio": 67890,
+      "descuento": "20%",
+      "categoria": "Herramientas > Eléctricas > Amoladoras",
+      "proveedor": "Supermat",
+      "status": "OK",
+      "precioLista": 84863
+    },
+    {
+      "url": "https://www.elamigo.com.ar/producto-ejemplo-2",
+      "nombre": "Amoladora Angular 115mm 900W",
+      "precio": 71500,
+      "descuento": "12%",
+      "categoria": "Herramientas > Eléctricas > Amoladoras",
+      "proveedor": "El Amigo",
+      "status": "OK",
+      "precioLista": 81250
+    },
+    {
+      "url": "https://tiendaemisrl.com.ar/producto-ejemplo-2",
+      "nombre": "Amoladora Angular 115mm 900W",
+      "precio": 69900,
+      "descuento": "5%",
+      "categoria": "Herramientas > Eléctricas > Amoladoras",
+      "proveedor": "Tienda Emi",
+      "status": "OK",
+      "precioLista": 73579
+    },
+    {
+      "url": "https://www.bercovich.com.ar/producto-ejemplo-3",
+      "nombre": "Sierra Circular 1400W 185mm",
+      "precio": 125000,
+      "descuento": "8%",
+      "categoria": "Herramientas > Eléctricas > Sierras",
+      "proveedor": "Bercovich",
+      "status": "OK",
+      "precioLista": 135870
+    },
+    {
+      "url": "https://www.supermat.com.ar/producto-ejemplo-3",
+      "nombre": "Sierra Circular 1400W 185mm",
+      "precio": 118900,
+      "descuento": "15%",
+      "categoria": "Herramientas > Eléctricas > Sierras",
+      "proveedor": "Supermat",
+      "status": "OK",
+      "precioLista": 139882
+    },
+    {
+      "url": "https://www.zeramiko.com/producto-ejemplo-4",
+      "nombre": "Juego de Destornilladores 6 Piezas",
+      "precio": 12500,
+      "descuento": "10%",
+      "categoria": "Herramientas > Manuales > Destornilladores",
+      "proveedor": "Zeramiko",
+      "status": "OK",
+      "precioLista": 13889
+    },
+    {
+      "url": "https://www.elamigo.com.ar/producto-ejemplo-4",
+      "nombre": "Juego de Destornilladores 6 Piezas",
+      "precio": 13200,
+      "descuento": "",
+      "categoria": "Herramientas > Manuales > Destornilladores",
+      "proveedor": "El Amigo",
+      "status": "OK",
+      "precioLista": null
+    },
+    {
+      "url": "https://www.supermat.com.ar/producto-ejemplo-5",
+      "nombre": "Martillo Carpintero 500g Mango Fibra",
+      "precio": 8990,
+      "descuento": "25%",
+      "categoria": "Herramientas > Manuales > Martillos",
+      "proveedor": "Supermat",
+      "status": "OK",
+      "precioLista": 11987
+    },
+    {
+      "url": "https://www.unimax.com.ar/producto-ejemplo-5",
+      "nombre": "Martillo Carpintero 500g Mango Fibra",
+      "precio": 9500,
+      "descuento": "",
+      "categoria": "Herramientas > Manuales > Martillos",
+      "proveedor": "Unimax",
+      "status": "OK",
+      "precioLista": null
+    },
+    {
+      "url": "https://tiendaemisrl.com.ar/producto-ejemplo-5",
+      "nombre": "Martillo Carpintero 500g Mango Fibra",
+      "precio": 9200,
+      "descuento": "15%",
+      "categoria": "Herramientas > Manuales > Martillos",
+      "proveedor": "Tienda Emi",
+      "status": "OK",
+      "precioLista": 10824
+    },
+    {
+      "url": "https://www.bercovich.com.ar/producto-ejemplo-6",
+      "nombre": "Lijadora Orbital 220W",
+      "precio": 54000,
+      "descuento": "12%",
+      "categoria": "Herramientas > Eléctricas > Lijadoras",
+      "proveedor": "Bercovich",
+      "status": "OK",
+      "precioLista": 61364
+    },
+    {
+      "url": "https://www.supermat.com.ar/producto-ejemplo-6",
+      "nombre": "Lijadora Orbital 220W",
+      "precio": 49900,
+      "descuento": "18%",
+      "categoria": "Herramientas > Eléctricas > Lijadoras",
+      "proveedor": "Supermat",
+      "status": "OK",
+      "precioLista": 60854
+    }
+  ],
+  "clearBefore": true
+}
