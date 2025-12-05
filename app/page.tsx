@@ -6,8 +6,8 @@ import FilterPanel from '@/components/FilterPanel';
 import PriceAnalysis from '@/components/PriceAnalysis';
 import ProviderStats from '@/components/ProviderStats';
 import ThemeToggle from '@/components/ThemeToggle';
-import { Product } from '@/types';
-import { Download, Upload, BarChart3, Package } from 'lucide-react';
+import { Product, ProductFilter } from '@/types';
+import { Upload, BarChart3, Package } from 'lucide-react';
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,17 +18,17 @@ export default function Home() {
     total: 0,
     totalPages: 0,
   });
-  const [filters, setFilters] = useState<any>({});
+  const [filters, setFilters] = useState<ProductFilter>({});
   const [activeTab, setActiveTab] = useState<'products' | 'analysis' | 'stats'>('products');
 
-  const fetchProducts = useCallback(async (page = 1, newFilters = filters) => {
+  const fetchProducts = useCallback(async (page = 1, newFilters: ProductFilter = {}) => {
     setLoading(true);
     try {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: pagination.limit.toString(),
         ...Object.fromEntries(
-          Object.entries(newFilters).filter(([_, v]) => v !== '' && v !== false)
+          Object.entries(newFilters).filter(([, v]) => v !== '' && v !== false && v !== undefined)
         ),
       });
 
@@ -42,13 +42,13 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  }, [filters, pagination.limit]);
+  }, [pagination.limit]);
 
   useEffect(() => {
     fetchProducts(1, filters);
-  }, [filters]);
+  }, [filters, fetchProducts]);
 
-  const handleFilterChange = (newFilters: any) => {
+  const handleFilterChange = (newFilters: ProductFilter) => {
     setFilters(newFilters);
   };
 

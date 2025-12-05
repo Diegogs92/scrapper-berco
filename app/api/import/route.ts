@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { insertProducts, clearAllProducts } from '@/lib/db';
-import { Product } from '@/types';
+
+interface ProductInput {
+  url?: string;
+  URL?: string;
+  nombre?: string;
+  Nombre?: string;
+  precio?: string | number;
+  Precio?: string | number;
+  descuento?: string;
+  Descuento?: string;
+  categoria?: string;
+  Categoria?: string;
+  proveedor?: string;
+  Proveedor?: string;
+  status?: string;
+  Status?: string;
+  fecha_scraping?: string;
+  Fecha?: string;
+  precioLista?: string | number;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Insertar productos
-    const productsToInsert = products.map((p: any) => ({
+    const productsToInsert = products.map((p: ProductInput) => ({
       url: p.url || p.URL || '',
       nombre: p.nombre || p.Nombre || '',
       precio: parseFloat(p.precio || p.Precio || '0'),

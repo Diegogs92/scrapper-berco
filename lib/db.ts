@@ -70,7 +70,7 @@ export function insertProducts(products: Omit<Product, 'id'>[]) {
 // Obtener productos con filtros
 export function getProducts(filters: ProductFilter = {}, limit = 100, offset = 0): Product[] {
   let query = 'SELECT * FROM products WHERE 1=1';
-  const params: any[] = [];
+  const params: (string | number)[] = [];
 
   if (filters.proveedor) {
     query += ' AND proveedor = ?';
@@ -111,7 +111,7 @@ export function getProducts(filters: ProductFilter = {}, limit = 100, offset = 0
 // Contar productos con filtros
 export function countProducts(filters: ProductFilter = {}): number {
   let query = 'SELECT COUNT(*) as count FROM products WHERE 1=1';
-  const params: any[] = [];
+  const params: (string | number)[] = [];
 
   if (filters.proveedor) {
     query += ' AND proveedor = ?';

@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { Search, Filter, X } from 'lucide-react';
+import { ProductFilter } from '@/types';
 
 interface FilterPanelProps {
-  onFilterChange: (filters: any) => void;
+  onFilterChange: (filters: ProductFilter) => void;
 }
 
 export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
@@ -23,18 +24,30 @@ export default function FilterPanel({ onFilterChange }: FilterPanelProps) {
     // Cargar proveedores
     fetch('/api/products?action=providers')
       .then((res) => res.json())
-      .then((data) => setProviders(data.providers || []));
+      .then((data) => setProviders(data.providers || []))
+      .catch(err => console.error('Error loading providers:', err));
 
     // Cargar categorías
     fetch('/api/products?action=categories')
       .then((res) => res.json())
-      .then((data) => setCategories(data.categories || []));
+      .then((data) => setCategories(data.categories || []))
+      .catch(err => console.error('Error loading categories:', err));
   }, []);
 
-  const handleFilterChange = (key: string, value: any) => {
+  const handleFilterChange = (key: string, value: string | number | boolean) => {
     const newFilters = { ...filters, [key]: value };
     setFilters(newFilters);
-    onFilterChange(newFilters);
+
+    const apiFilters: ProductFilter = {
+      search: newFilters.search || undefined,
+      proveedor: newFilters.proveedor || undefined,
+      categoria: newFilters.categoria || undefined,
+      minPrice: newFilters.minPrice ? parseFloat(newFilters.minPrice) : undefined,
+      maxPrice: newFilters.maxPrice ? parseFloat(newFilters.maxPrice) : undefined,
+      hasDiscount: newFilters.hasDiscount || undefined,
+    };
+
+    onFilterChange(apiFilters);
   };
 
   const clearFilters = () => {

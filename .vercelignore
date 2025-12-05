@@ -1,0 +1,8 @@
+# Ignorar base de datos SQLite en Vercel
+*.db
+*.db-shm
+*.db-wal
+
+# Archivos de desarrollo
+.env.local
+.env.development
