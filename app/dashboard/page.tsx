@@ -24,7 +24,7 @@ export default function Dashboard() {
   }, [refreshProgress]);
 
   return (
-    <main className="mx-auto flex max-w-7xl flex-col gap-6 p-6">
+    <main className="mx-auto flex w-full max-w-[1800px] flex-col gap-6 p-6">
       <div className="flex flex-col gap-3">
         <p className="text-sm uppercase tracking-[0.2em] text-white/60">Scraper</p>
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">

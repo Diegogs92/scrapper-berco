@@ -119,28 +119,29 @@ export default function ResultsTable({ onRefresh }: Props) {
       )}
 
       <div className="flex-1 overflow-auto rounded-lg border border-white/5">
-        <table className="min-w-full text-sm text-white/80">
+        <table className="w-full text-sm text-white/80">
           <thead className="bg-white/5 text-left text-xs uppercase text-white/60 sticky top-0">
             <tr>
-              <th className="px-3 py-2 w-20">Imagen</th>
-              <th className="px-3 py-2">Producto</th>
-              <th className="px-3 py-2">Precio</th>
-              <th className="px-3 py-2">Desc.</th>
-              <th className="px-3 py-2">Proveedor</th>
-              <th className="px-3 py-2">Estado</th>
+              <th className="px-4 py-2">Producto</th>
+              <th className="px-4 py-2">Precio</th>
+              <th className="px-4 py-2">Descuento</th>
+              <th className="px-4 py-2">Proveedor</th>
+              <th className="px-4 py-2">Categoría</th>
+              <th className="px-4 py-2">Estado</th>
+              <th className="px-4 py-2">Fecha</th>
             </tr>
           </thead>
           <tbody>
             {loading && results.length === 0 ? (
               <tr>
-                <td className="px-3 py-12 text-center text-white/60" colSpan={6}>
+                <td className="px-4 py-12 text-center text-white/60" colSpan={7}>
                   <Loader2 className="h-6 w-6 animate-spin mx-auto mb-2" />
                   Cargando resultados...
                 </td>
               </tr>
             ) : results.length === 0 ? (
               <tr>
-                <td className="px-3 py-6 text-center text-white/60" colSpan={6}>
+                <td className="px-4 py-6 text-center text-white/60" colSpan={7}>
                   {hasActiveFilters
                     ? 'No se encontraron resultados con esos filtros.'
                     : 'Sin resultados. Ejecuta un scraping para ver datos.'}
@@ -149,24 +150,8 @@ export default function ResultsTable({ onRefresh }: Props) {
             ) : (
               results.map((r) => (
                 <tr key={r.id || r.url} className="border-t border-white/5 hover:bg-white/5">
-                  <td className="px-3 py-2">
-                    {r.imagen ? (
-                      <img
-                        src={r.imagen}
-                        alt={r.nombre || 'Producto'}
-                        className="h-14 w-14 rounded-lg object-cover bg-white/5"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <div className="h-14 w-14 rounded-lg bg-white/5 flex items-center justify-center text-white/30 text-xs">
-                        Sin img
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-3 py-2">
-                    <div className="font-medium text-white max-w-xs line-clamp-2">{r.nombre || 'Sin nombre'}</div>
+                  <td className="px-4 py-3">
+                    <div className="font-medium text-white">{r.nombre || 'Sin nombre'}</div>
                     {r.error && <div className="text-xs text-amber-300 mt-1">{r.error}</div>}
                     <a
                       href={r.url}
@@ -177,16 +162,19 @@ export default function ResultsTable({ onRefresh }: Props) {
                       Ver producto
                     </a>
                   </td>
-                  <td className="px-3 py-2 whitespace-nowrap">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <span className="font-semibold text-white">${r.precio?.toLocaleString('es-AR')}</span>
                   </td>
-                  <td className="px-3 py-2">
-                    {r.descuento && (
+                  <td className="px-4 py-3">
+                    {r.descuento ? (
                       <span className="text-emerald-300 font-medium">{r.descuento}</span>
+                    ) : (
+                      <span className="text-white/40">-</span>
                     )}
                   </td>
-                  <td className="px-3 py-2 text-white/80">{r.proveedor}</td>
-                  <td className="px-3 py-2">
+                  <td className="px-4 py-3 text-white/80">{r.proveedor}</td>
+                  <td className="px-4 py-3 text-white/70">{r.categoria || '-'}</td>
+                  <td className="px-4 py-3">
                     <span
                       className={`rounded-full px-2 py-1 text-xs ${
                         r.status === 'success'
@@ -196,6 +184,13 @@ export default function ResultsTable({ onRefresh }: Props) {
                     >
                       {r.status}
                     </span>
+                  </td>
+                  <td className="px-4 py-3 text-xs text-white/60 whitespace-nowrap">
+                    {r.fechaScraping ? new Date(r.fechaScraping).toLocaleDateString('es-AR', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: '2-digit'
+                    }) : '-'}
                   </td>
                 </tr>
               ))
