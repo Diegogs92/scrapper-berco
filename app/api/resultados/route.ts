@@ -51,10 +51,10 @@ export async function GET(request: NextRequest) {
 
     // Client-side filters (Firestore doesn't support contains or multiple inequality)
     if (categoria) {
-      results = results.filter(item => item.categoria.toLowerCase().includes(categoria));
+      results = results.filter(item => item.categoria?.toLowerCase().includes(categoria));
     }
     if (search) {
-      results = results.filter(item => item.nombre.toLowerCase().includes(search));
+      results = results.filter(item => item.nombre?.toLowerCase().includes(search));
     }
 
     if (format === 'csv') {

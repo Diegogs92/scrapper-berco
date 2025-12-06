@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
     // Client-side filter for search (Firestore doesn't support contains)
     if (search) {
-      urls = urls.filter(item => item.url.toLowerCase().includes(search));
+      urls = urls.filter(item => item.url?.toLowerCase().includes(search));
     }
 
     if (format === 'csv') {
