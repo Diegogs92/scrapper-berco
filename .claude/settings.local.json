@@ -21,7 +21,10 @@
       "Bash(cmd.exe /c start \"\" \"c:\\Users\\diego\\OneDrive\\Documentos\\scrapper-berco\\google-apps-script-project\\INSTALAR_AHORA.md\")",
       "Bash(cmd.exe /c start \"\" \"https://vercel.com/dgarciasantillan-7059s-projects/scrapper-berco/settings/deployment-protection\")",
       "Bash(dir:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git fetch:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []

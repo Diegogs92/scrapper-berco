@@ -3,17 +3,26 @@
 import { useState, useEffect } from 'react';
 import { X, CheckCircle, Link as LinkIcon, Play, Eye } from 'lucide-react';
 
-export default function OnboardingGuide() {
+type Props = {
+  forceShow?: boolean;
+  onClose?: () => void;
+};
+
+export default function OnboardingGuide({ forceShow, onClose }: Props = {}) {
   const [isVisible, setIsVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
-    // Mostrar guía si es la primera vez
-    const hasSeenGuide = localStorage.getItem('hasSeenOnboarding');
-    if (!hasSeenGuide) {
+    // Mostrar guía si es la primera vez o si se fuerza
+    if (forceShow) {
       setIsVisible(true);
+    } else {
+      const hasSeenGuide = localStorage.getItem('hasSeenOnboarding');
+      if (!hasSeenGuide) {
+        setIsVisible(true);
+      }
     }
-  }, []);
+  }, [forceShow]);
 
   const steps = [
     {
@@ -37,8 +46,11 @@ export default function OnboardingGuide() {
   ];
 
   const handleClose = () => {
-    localStorage.setItem('hasSeenOnboarding', 'true');
+    if (!forceShow) {
+      localStorage.setItem('hasSeenOnboarding', 'true');
+    }
     setIsVisible(false);
+    onClose?.();
   };
 
   if (!isVisible) return null;

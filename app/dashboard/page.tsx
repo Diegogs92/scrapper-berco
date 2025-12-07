@@ -32,13 +32,7 @@ function DashboardContent() {
 
   return (
     <main className="mx-auto flex w-full max-w-[1800px] flex-col gap-6 p-6">
-      <OnboardingGuide />
-
-      {showGuide && (
-        <div className="fixed inset-0 z-50">
-          <OnboardingGuide />
-        </div>
-      )}
+      <OnboardingGuide forceShow={showGuide} onClose={() => setShowGuide(false)} />
 
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
