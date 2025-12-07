@@ -41,37 +41,57 @@
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-white/5 bg-[rgba(255,255,255,0.03)] shadow-xl shadow-black/30 backdrop-blur;
+    @apply rounded-2xl border border-white/5 bg-[rgba(255,255,255,0.03)] shadow-xl shadow-black/30 backdrop-blur transition-all duration-300;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95;
   }
+}
+
+/* Smooth transitions everywhere */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 /* Light theme overrides for utility-heavy sections */
 .theme-light .card {
-  border-color: #e2e8f0;
+  border-color: #cbd5e1;
   background: #ffffff;
   color: #0f172a;
-  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1), 0 1px 3px rgba(15, 23, 42, 0.05);
 }
 
 .theme-light .bg-white\/5 {
-  background-color: rgba(15, 23, 42, 0.04) !important;
+  background-color: rgba(15, 23, 42, 0.05) !important;
 }
 .theme-light .bg-white\/10 {
-  background-color: rgba(15, 23, 42, 0.08) !important;
+  background-color: rgba(15, 23, 42, 0.10) !important;
 }
 .theme-light .bg-white\/20 {
-  background-color: rgba(15, 23, 42, 0.16) !important;
+  background-color: rgba(15, 23, 42, 0.15) !important;
 }
 .theme-light .bg-white\/30 {
-  background-color: rgba(15, 23, 42, 0.24) !important;
+  background-color: rgba(15, 23, 42, 0.20) !important;
+}
+.theme-light .hover\:bg-white\/5:hover {
+  background-color: rgba(15, 23, 42, 0.08) !important;
+}
+.theme-light .hover\:bg-white\/10:hover {
+  background-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+.theme-light .border-white\/10 {
+  border-color: rgba(15, 23, 42, 0.1) !important;
 }
 
 .theme-light .text-white {
   color: #0f172a !important;
+}
+.theme-light .text-white\/90 {
+  color: rgba(15, 23, 42, 0.9) !important;
 }
 .theme-light .text-white\/70 {
   color: rgba(15, 23, 42, 0.7) !important;
@@ -82,13 +102,24 @@
 .theme-light .text-white\/80 {
   color: rgba(15, 23, 42, 0.8) !important;
 }
+.theme-light .text-white\/50 {
+  color: rgba(15, 23, 42, 0.5) !important;
+}
+.theme-light .text-white\/40 {
+  color: rgba(15, 23, 42, 0.4) !important;
+}
 
 .theme-light input,
 .theme-light textarea,
 .theme-light select {
-  background: #ffffff;
-  color: #0f172a;
-  border-color: #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+.theme-light input::placeholder,
+.theme-light textarea::placeholder {
+  color: rgba(15, 23, 42, 0.4) !important;
 }
 
 .theme-light table {
@@ -103,4 +134,17 @@
 .theme-light .btn.bg-rose-500\/80,
 .theme-light .btn.bg-emerald-500\/80 {
   color: #ffffff !important;
+}
+
+/* Smooth hover effects */
+button, a, input, select, textarea {
+  @apply transition-all duration-200;
+}
+
+button:hover, a:hover {
+  @apply scale-[1.02];
+}
+
+button:active, a:active {
+  @apply scale-[0.98];
 }
