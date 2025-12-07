@@ -8,11 +8,13 @@ import ProgressBar from '@/components/ProgressBar';
 import ThemeToggle from '@/components/ThemeToggle';
 import PriceComparison from '@/components/PriceComparison';
 import Logo from '@/components/Logo';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import UserMenu from '@/components/UserMenu';
 import { ProgressTotals } from '@/types';
 
 const emptyTotals: ProgressTotals = { pending: 0, processing: 0, done: 0, error: 0 };
 
-export default function Dashboard() {
+function DashboardContent() {
   const [totals, setTotals] = useState<ProgressTotals>(emptyTotals);
 
   const refreshProgress = useCallback(async () => {
@@ -42,7 +44,10 @@ export default function Dashboard() {
               Ejecuta scraping manual o automatico, gestiona las URLs y exporta resultados.
             </p>
           </div>
-          <ScraperControls onRefresh={refreshProgress} totals={totals} />
+          <div className="flex items-center gap-4">
+            <UserMenu />
+            <ScraperControls onRefresh={refreshProgress} totals={totals} />
+          </div>
         </div>
       </div>
 
@@ -56,5 +61,13 @@ export default function Dashboard() {
       {/* Price Comparison Section */}
       <PriceComparison />
     </main>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
   );
 }

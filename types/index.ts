@@ -92,3 +92,23 @@ export interface ProviderStats {
   productosConDescuento: number;
   descuentoPromedio: number;
 }
+
+// Tipos de usuario y autenticación
+export type UserRole = 'desarrollador' | 'administrador' | 'consultante';
+
+export interface User {
+  id: string;
+  email: string;
+  nombre: string;
+  rol: UserRole;
+  activo: boolean;
+  fechaCreacion: string;
+  ultimoAcceso?: string;
+}
+
+export interface AuthSession {
+  userId: string;
+  email: string;
+  rol: UserRole;
+  token: string;
+}

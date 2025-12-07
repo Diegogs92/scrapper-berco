@@ -4,9 +4,10 @@ import { db } from './firebase';
 import { cleanText, delay, isoNow, safeNum } from './utils';
 import { ScrapeBatchSummary, ScrapeResult, UrlItem } from '@/types';
 
-const RATE_LIMIT_MS = 500;
-const MAX_PER_RUN = 300;
-const EXECUTION_LIMIT_MS = 4 * 60 * 1000;
+const RATE_LIMIT_MS = 100; // Reducido de 500ms a 100ms
+const MAX_PER_RUN = 1000; // Aumentado de 300 a 1000
+const EXECUTION_LIMIT_MS = 9 * 60 * 1000; // Aumentado a 9 minutos (límite de Vercel: 10min)
+const PARALLEL_BATCH_SIZE = 10; // Procesar 10 URLs en paralelo
 
 type JsonLdProduct = {
   name?: string;
@@ -201,6 +202,34 @@ export async function scrapeUrl(url: string, proveedor?: string): Promise<Scrape
   }
 }
 
+async function processSingleUrl(doc: FirebaseFirestore.QueryDocumentSnapshot) {
+  const urlData = doc.data() as UrlItem;
+  if (!urlData.url) {
+    await doc.ref.update({ status: 'error', ultimoError: 'URL vacia' });
+    return { processed: 1, errors: 1 };
+  }
+
+  await doc.ref.update({ status: 'processing', ultimoError: null });
+  const result = await scrapeUrl(urlData.url, urlData.proveedor);
+
+  await db.collection('resultados').add({
+    ...result,
+    urlId: doc.id,
+  });
+
+  await doc.ref.update({
+    proveedor: result.proveedor,
+    status: result.status === 'success' ? 'done' : 'error',
+    fechaScraping: result.fechaScraping,
+    ultimoError: result.status === 'error' ? result.error || 'Error desconocido' : null,
+  });
+
+  return {
+    processed: 1,
+    errors: result.status === 'error' ? 1 : 0,
+  };
+}
+
 export async function runScrapingBatch(
   mode: 'manual' | 'auto',
   limit = MAX_PER_RUN
@@ -216,37 +245,25 @@ export async function runScrapingBatch(
   let processed = 0;
   let errors = 0;
 
-  for (const doc of pendingSnapshot.docs) {
+  // Procesar en lotes paralelos
+  const docs = pendingSnapshot.docs;
+  for (let i = 0; i < docs.length; i += PARALLEL_BATCH_SIZE) {
     if (Date.now() - startedAt > EXECUTION_LIMIT_MS) {
       break;
     }
 
-    const urlData = doc.data() as UrlItem;
-    if (!urlData.url) {
-      await doc.ref.update({ status: 'error', ultimoError: 'URL vacia' });
-      errors += 1;
-      continue;
+    const batch = docs.slice(i, i + PARALLEL_BATCH_SIZE);
+    const results = await Promise.all(batch.map(doc => processSingleUrl(doc)));
+
+    results.forEach(result => {
+      processed += result.processed;
+      errors += result.errors;
+    });
+
+    // Pequeño delay entre lotes para no saturar los servidores
+    if (i + PARALLEL_BATCH_SIZE < docs.length) {
+      await delay(RATE_LIMIT_MS);
     }
-    await doc.ref.update({ status: 'processing', ultimoError: null });
-
-    const result = await scrapeUrl(urlData.url, urlData.proveedor);
-
-    await db.collection('resultados').add({
-      ...result,
-      urlId: doc.id,
-    });
-
-    await doc.ref.update({
-      proveedor: result.proveedor,
-      status: result.status === 'success' ? 'done' : 'error',
-      fechaScraping: result.fechaScraping,
-      ultimoError: result.status === 'error' ? result.error || 'Error desconocido' : null,
-    });
-
-    processed += 1;
-    if (result.status === 'error') errors += 1;
-
-    await delay(RATE_LIMIT_MS);
   }
 
   const remainingSnapshot = await db.collection('urls').where('status', '==', 'pending').get();
