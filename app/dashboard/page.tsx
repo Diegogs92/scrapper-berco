@@ -11,6 +11,7 @@ import Logo from '@/components/Logo';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import UserMenu from '@/components/UserMenu';
 import OnboardingGuide from '@/components/OnboardingGuide';
+import ScrapingProgress from '@/components/ScrapingProgress';
 import { ProgressTotals } from '@/types';
 import { HelpCircle } from 'lucide-react';
 
@@ -19,11 +20,13 @@ const emptyTotals: ProgressTotals = { pending: 0, processing: 0, done: 0, error:
 function DashboardContent() {
   const [totals, setTotals] = useState<ProgressTotals>(emptyTotals);
   const [showGuide, setShowGuide] = useState(false);
+  const [scrapingActive, setScrapingActive] = useState(false);
 
   const refreshProgress = useCallback(async () => {
     const res = await fetch('/api/urls?limit=1');
     const data = await res.json();
     setTotals(data.totals || emptyTotals);
+    setScrapingActive(data.config?.scrapingActivo || false);
   }, []);
 
   useEffect(() => {
@@ -33,6 +36,7 @@ function DashboardContent() {
   return (
     <main className="mx-auto flex w-full max-w-[1800px] flex-col gap-6 p-6">
       <OnboardingGuide forceShow={showGuide} onClose={() => setShowGuide(false)} />
+      <ScrapingProgress totals={totals} isActive={scrapingActive} />
 
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
