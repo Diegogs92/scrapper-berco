@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --surface: #29335C;
-  --card: #29335C;
-  --card-muted: #598392;
-  --accent: #16DB93;
-  --accent-strong: #598392;
-  --error: #DB2B39;
-  --foreground: #EEEEFF;
+  --surface: #0f172a;
+  --card: #111827;
+  --card-muted: #1f2937;
+  --accent: #0ea5e9;
+  --accent-strong: #14b8a6;
+  --error: #ef4444;
+  --foreground: #e2e8f0;
 
-  /* Spacing scale */
   --spacing-xs: 0.5rem;
   --spacing-sm: 0.75rem;
   --spacing-md: 1rem;
@@ -19,17 +18,15 @@
   --spacing-xl: 2rem;
   --spacing-2xl: 3rem;
 
-  /* Border radius */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.25rem;
 
-  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 6px 20px -8px rgba(15, 23, 42, 0.35);
+  --shadow-lg: 0 18px 45px -20px rgba(15, 23, 42, 0.55);
+  --shadow-xl: 0 28px 70px -32px rgba(15, 23, 42, 0.7);
 }
 
 * {
@@ -37,13 +34,9 @@
 }
 
 .theme-dark body {
-  background: linear-gradient(135deg,
-    rgba(41, 51, 92, 1) 0%,
-    rgba(41, 51, 92, 0.95) 50%,
-    rgba(89, 131, 146, 0.15) 100%
-  ),
-  radial-gradient(circle at 10% 20%, rgba(22, 219, 147, 0.08), transparent 40%),
-  radial-gradient(circle at 90% 80%, rgba(89, 131, 146, 0.12), transparent 40%);
+  background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(20, 184, 166, 0.12), transparent 32%),
+    linear-gradient(145deg, #0b1222 0%, #0f172a 40%, #111827 100%);
   background-attachment: fixed;
   color: var(--foreground);
   min-height: 100vh;
@@ -53,48 +46,39 @@
 }
 
 .theme-light {
-  --surface: #F5F7FA;
+  --surface: #f8fafc;
   --card: #ffffff;
-  --card-muted: #E8EDF3;
-  --accent: #16DB93;
-  --accent-strong: #598392;
-  --error: #DB2B39;
-  --foreground: #1A202C;
+  --card-muted: #e2e8f0;
+  --accent: #0ea5e9;
+  --accent-strong: #0f172a;
+  --error: #ef4444;
+  --foreground: #0f172a;
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.03);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 8px 10px -6px rgb(0 0 0 / 0.08);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --shadow-md: 0 10px 25px -18px rgba(15, 23, 42, 0.35);
+  --shadow-lg: 0 26px 50px -32px rgba(15, 23, 42, 0.5);
+  --shadow-xl: 0 40px 80px -50px rgba(15, 23, 42, 0.6);
 }
 
 .theme-light body {
-  background: linear-gradient(135deg,
-    rgba(245, 247, 250, 1) 0%,
-    rgba(238, 238, 255, 0.8) 50%,
-    rgba(89, 131, 146, 0.05) 100%
-  ),
-  radial-gradient(circle at 10% 20%, rgba(22, 219, 147, 0.05), transparent 40%);
+  background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.08), transparent 32%),
+    radial-gradient(circle at 80% 0%, rgba(20, 184, 166, 0.08), transparent 32%),
+    linear-gradient(145deg, #eef2f7 0%, #f8fafc 45%, #ffffff 100%);
   background-attachment: fixed;
   color: var(--foreground);
 }
 
 @layer components {
   .card {
-    @apply rounded-xl border shadow-lg backdrop-blur-sm transition-all duration-300;
-    background: rgba(255, 255, 255, 0.05);
+    @apply rounded-2xl border shadow-lg backdrop-blur-sm transition-all duration-300;
+    background: rgba(255, 255, 255, 0.03);
     border-color: rgba(255, 255, 255, 0.08);
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.15),
-      0 2px 4px -1px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    box-shadow: var(--shadow-md);
   }
 
   .card:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow:
-      0 10px 15px -3px rgba(0, 0, 0, 0.2),
-      0 4px 6px -2px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow-lg);
   }
 
   .btn {
@@ -148,8 +132,8 @@
   }
 
   .input:focus {
-    @apply outline-none ring-2 ring-[#16DB93]/30;
-    border-color: #16DB93;
+    @apply outline-none ring-2 ring-[var(--accent)]/30;
+    border-color: var(--accent);
     background: rgba(255, 255, 255, 0.08);
   }
 
@@ -170,20 +154,14 @@
 /* Light theme overrides for utility-heavy sections */
 .theme-light .card {
   background: #ffffff;
-  border-color: rgba(41, 51, 92, 0.12);
-  color: #1A202C;
-  box-shadow:
-    0 4px 6px -1px rgba(41, 51, 92, 0.08),
-    0 2px 4px -1px rgba(41, 51, 92, 0.04),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+  box-shadow: var(--shadow-md);
 }
 
 .theme-light .card:hover {
-  border-color: rgba(41, 51, 92, 0.18);
-  box-shadow:
-    0 10px 15px -3px rgba(41, 51, 92, 0.12),
-    0 4px 6px -2px rgba(41, 51, 92, 0.06),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: var(--shadow-lg);
 }
 
 .theme-light .bg-white\/5 {

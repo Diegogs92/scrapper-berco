@@ -7,14 +7,14 @@ type Props = {
 export default function ProgressBar({ totals }: Props) {
   const total = totals.pending + totals.processing + totals.done + totals.error || 1;
   const segments = [
-    { label: 'Pendientes', value: totals.pending, color: 'bg-[#598392]' },
-    { label: 'En curso', value: totals.processing, color: 'bg-[#598392]' },
-    { label: 'OK', value: totals.done, color: 'bg-[#16DB93]' },
-    { label: 'Errores', value: totals.error, color: 'bg-[#DB2B39]' },
+    { label: 'Pendientes', value: totals.pending, color: 'bg-sky-400' },
+    { label: 'En curso', value: totals.processing, color: 'bg-cyan-400' },
+    { label: 'OK', value: totals.done, color: 'bg-emerald-400' },
+    { label: 'Errores', value: totals.error, color: 'bg-rose-500' },
   ];
 
   return (
-    <div className="card p-4">
+    <div className="card p-4 bg-white/5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-xs uppercase tracking-[0.2em] text-white/60">Progreso</p>
