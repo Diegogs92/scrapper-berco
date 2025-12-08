@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/Logo';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -31,9 +33,8 @@ export default function LoginPage() {
         return;
       }
 
-      // Guardar token
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      // Guardar token y usuario en el contexto (persiste en localStorage)
+      login(data.token, data.user);
 
       // Redirigir al dashboard
       router.push('/dashboard');
