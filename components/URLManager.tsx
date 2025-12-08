@@ -317,7 +317,18 @@ export default function URLManager({ onChange }: Props) {
               urls.map((u) => (
                 <tr key={u.id} className="border-t border-white/5 hover:bg-white/5">
                   <td className="px-3 py-2 align-top">
-                    <div className="line-clamp-2 break-all text-white">{u.url}</div>
+                    {u.url ? (
+                      <a
+                        href={u.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="line-clamp-2 break-all text-emerald-300 hover:text-emerald-200 underline decoration-emerald-400/60"
+                      >
+                        {u.url}
+                      </a>
+                    ) : (
+                      <div className="line-clamp-2 break-all text-white">-</div>
+                    )}
                     {u.ultimoError && (
                       <p className="text-xs text-amber-300">Error: {u.ultimoError}</p>
                     )}
@@ -454,7 +465,14 @@ export default function URLManager({ onChange }: Props) {
                 Esta acción no se puede deshacer.
               </p>
               <div className="w-full bg-white/5 rounded-lg p-3 mb-6">
-                <p className="text-xs text-white/60 break-all line-clamp-2">{deleteConfirm.url}</p>
+                <a
+                  href={deleteConfirm.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-white/60 break-all line-clamp-2 underline decoration-emerald-400/60"
+                >
+                  {deleteConfirm.url}
+                </a>
               </div>
               <div className="flex gap-3 w-full">
                 <button
