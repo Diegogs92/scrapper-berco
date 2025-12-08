@@ -3,13 +3,42 @@ export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve
 // Convierte valores de precio en numero soportando formatos ARS (puntos como miles, coma decimal).
 export function safeNum(value: unknown): number | null {
   if (value === null || value === undefined) return null;
-  const str = String(value)
-    .replace(/\s+/g, '')
-    .replace(/(ARS|\$|\.)/gi, '')
-    .replace(/,/g, '.')
-    .replace(/[^\d.]/g, '');
+  const raw = String(value).replace(/\s+/g, '');
+  // Quitar símbolos de moneda pero conservar separadores para analizarlos
+  const cleaned = raw.replace(/(ARS|\$)/gi, '');
 
-  const num = parseFloat(str);
+  // Detectar separadores presentes
+  const hasComma = cleaned.includes(',');
+  const hasDot = cleaned.includes('.');
+
+  let normalized = cleaned;
+
+  if (hasComma && hasDot) {
+    // Si hay ambos separadores, asumimos que el último que aparece es el decimal.
+    const lastComma = cleaned.lastIndexOf(',');
+    const lastDot = cleaned.lastIndexOf('.');
+    if (lastComma > lastDot) {
+      // Formato "10.265,41" → miles con punto, decimal con coma
+      normalized = cleaned.replace(/\./g, '').replace(/,/g, '.');
+    } else {
+      // Formato "10,265.41" → miles con coma, decimal con punto
+      normalized = cleaned.replace(/,/g, '');
+    }
+  } else if (hasComma && !hasDot) {
+    // Solo coma: tratar como decimal
+    normalized = cleaned.replace(/,/g, '.');
+  } else if (hasDot && !hasComma) {
+    // Solo punto: ya es decimal, mantener
+    normalized = cleaned;
+  } else {
+    // Solo dígitos
+    normalized = cleaned;
+  }
+
+  // Quitar cualquier otro carácter no numérico ni punto decimal
+  normalized = normalized.replace(/[^\d.]/g, '');
+
+  const num = parseFloat(normalized);
   return Number.isFinite(num) ? num : null;
 }
 
