@@ -204,79 +204,94 @@ export default function URLManager({ onChange }: Props) {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex flex-col gap-2 md:flex-row">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
-          <input
-            className="w-full rounded-lg border border-white/10 bg-black/30 py-2 pl-10 pr-10 text-sm text-white outline-none focus:border-emerald-400"
-            placeholder="Buscar por URL..."
-            value={searchTerm}
+      <div className="grid gap-3 md:grid-cols-[2fr,1fr]">
+        <div className="card bg-white/5 border border-white/10 px-4 py-3">
+          <p className="text-xs text-white/50 uppercase tracking-[0.2em] mb-1">Buscar</p>
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+            <input
+              className="w-full rounded-lg border border-white/10 bg-black/40 py-2.5 pl-10 pr-10 text-sm text-white outline-none focus:border-emerald-400"
+              placeholder="Busca por URL exacta o parte de ella"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          <p className="text-[11px] text-white/40 mt-2">Solo filtra la lista, no agrega URLs nuevas.</p>
+        </div>
+
+        <div className="card bg-white/5 border border-white/10 px-4 py-3">
+          <p className="text-xs text-white/50 uppercase tracking-[0.2em] mb-1">Filtrar estado</p>
+          <select
+            className="w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-400"
+            value={statusFilter}
             onChange={(e) => {
-              setSearchTerm(e.target.value);
+              setStatusFilter(e.target.value);
               setCurrentPage(1);
             }}
-          />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
+          >
+            <option value="">Todos los estados</option>
+            <option value="pending">Pendientes</option>
+            <option value="processing">En proceso</option>
+            <option value="done">Completadas</option>
+            <option value="error">Con error</option>
+          </select>
+          <p className="text-[11px] text-white/40 mt-2">Ajusta qué URLs ves en la tabla.</p>
         </div>
-        <select
-          className="rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none focus:border-emerald-400"
-          value={statusFilter}
-          onChange={(e) => {
-            setStatusFilter(e.target.value);
-            setCurrentPage(1);
-          }}
-        >
-          <option value="">Todos los estados</option>
-          <option value="pending">Pendientes</option>
-          <option value="processing">En proceso</option>
-          <option value="done">Completadas</option>
-          <option value="error">Con error</option>
-        </select>
       </div>
 
-      {/* Simplified unified input */}
-      <div className="flex flex-col gap-3">
+      {/* Add URLs */}
+      <div className="card bg-white/5 border border-white/10 p-4 flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-white/90">Agregar URLs</label>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".csv,.txt"
-            onChange={handleFileUpload}
-            className="hidden"
-          />
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
-            disabled={loading}
-          >
-            <Upload className="h-3 w-3" />
-            Subir archivo
-          </button>
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-white/60">Agregar URLs</p>
+            <p className="text-sm text-white/50">Pega una URL o importa varias desde archivo.</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".csv,.txt"
+              onChange={handleFileUpload}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
+              disabled={loading}
+            >
+              <Upload className="h-3 w-3" />
+              Subir archivo
+            </button>
+          </div>
         </div>
 
         <form onSubmit={addUrl} className="flex gap-2">
           <input
-            className="flex-1 rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none focus:border-emerald-400 placeholder:text-white/40"
-            placeholder="Agrega la URL de un nuevo producto"
+            className="flex-1 rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-emerald-400 placeholder:text-white/40"
+            placeholder="Agregar una nueva URL para scrapear"
             value={newUrl}
             onChange={(e) => setNewUrl(e.target.value)}
           />
           <button
             type="submit"
-            className="btn bg-emerald-500 text-white hover:bg-emerald-400 px-4"
+            className="btn bg-emerald-500 text-white hover:bg-emerald-400 px-4 flex items-center gap-2"
             disabled={loading}
             title="Agregar URL"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+            <span className="hidden sm:inline">Agregar</span>
           </button>
         </form>
 
