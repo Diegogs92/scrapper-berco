@@ -96,31 +96,31 @@ export default function ResultsTable({ onRefresh }: Props) {
   const selectedProducts = results.filter(r => selectedIds.has(r.id || r.url));
 
   return (
-    <div className="card flex h-full flex-col gap-4 p-4">
-      <div className="flex items-start justify-between gap-3">
+    <div className="card flex h-full flex-col gap-6 p-6">
+      <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-white/60">Paso 3</p>
-          <h3 className="text-lg font-semibold text-white">Revisa los resultados</h3>
-          <p className="text-xs text-white/50 mt-1">
+          <p className="text-xs uppercase tracking-wider text-white/50 font-semibold mb-2">Paso 3</p>
+          <h3 className="text-xl font-bold text-white mb-1">Revisa los resultados</h3>
+          <p className="text-sm text-white/60">
             {totalCount > 0 ? `${totalCount} productos scrapeados` : 'Los resultados aparecerán aquí'}
           </p>
         </div>
         {totalCount > 0 && (
           <a
             href="/api/resultados?format=csv"
-            className="text-xs text-[#16DB93] hover:text-[#16DB93] flex items-center gap-1"
+            className="btn bg-white/5 text-[#16DB93] hover:bg-white/10 flex items-center gap-2 border border-[#16DB93]/30"
           >
-            <FileDown className="h-3 w-3" />
-            Exportar CSV
+            <FileDown className="h-4 w-4" />
+            <span>Exportar CSV</span>
           </a>
         )}
       </div>
 
-      <div className="flex flex-col gap-2 md:flex-row">
+      <div className="flex flex-col gap-3 md:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
           <input
-            className="w-full rounded-lg border border-white/10 bg-black/30 py-2 pl-10 pr-10 text-sm text-white outline-none focus:border-[#16DB93]"
+            className="input w-full pl-10 pr-10"
             placeholder="Buscar productos..."
             value={filters.search || ''}
             onChange={(e) => updateFilter('search', e.target.value)}
@@ -128,14 +128,14 @@ export default function ResultsTable({ onRefresh }: Props) {
           {filters.search && (
             <button
               onClick={() => updateFilter('search', '')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
             >
               <X className="h-4 w-4" />
             </button>
           )}
         </div>
         <select
-          className="rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none focus:border-[#16DB93]"
+          className="input min-w-[200px]"
           value={filters.status || ''}
           onChange={(e) => updateFilter('status', e.target.value)}
         >
@@ -164,11 +164,11 @@ export default function ResultsTable({ onRefresh }: Props) {
         </button>
       )}
 
-      <div className="flex-1 overflow-auto rounded-lg border border-white/5">
-        <table className="w-full text-sm text-white/80">
-          <thead className="bg-white/5 text-left text-xs uppercase text-white/60 sticky top-0">
-            <tr>
-              <th className="px-4 py-2 w-12">
+      <div className="table-container flex-1 overflow-auto">
+        <table className="w-full text-sm">
+          <thead className="bg-white/5 text-left text-xs uppercase font-semibold text-white/70 sticky top-0 backdrop-blur-sm">
+            <tr className="border-b border-white/10">
+              <th className="px-5 py-4 w-12">
                 <input
                   type="checkbox"
                   checked={results.length > 0 && selectedIds.size === results.length}
@@ -176,13 +176,13 @@ export default function ResultsTable({ onRefresh }: Props) {
                   className="w-4 h-4 rounded border-white/20 bg-white/10 text-[#16DB93] focus:ring-[#16DB93] focus:ring-offset-0 cursor-pointer"
                 />
               </th>
-              <th className="px-4 py-2">Producto</th>
-              <th className="px-4 py-2">Precio</th>
-              <th className="px-4 py-2">Descuento</th>
-              <th className="px-4 py-2">Proveedor</th>
-              <th className="px-4 py-2">Categoría</th>
-              <th className="px-4 py-2">Estado</th>
-              <th className="px-4 py-2">Fecha</th>
+              <th className="px-5 py-4">Producto</th>
+              <th className="px-5 py-4">Precio</th>
+              <th className="px-5 py-4">Descuento</th>
+              <th className="px-5 py-4">Proveedor</th>
+              <th className="px-5 py-4">Categoría</th>
+              <th className="px-5 py-4">Estado</th>
+              <th className="px-5 py-4">Fecha</th>
             </tr>
           </thead>
           <tbody>
@@ -220,12 +220,14 @@ export default function ResultsTable({ onRefresh }: Props) {
                 </td>
               </tr>
             ) : (
-              results.map((r) => {
+              results.map((r, index) => {
                 const rowId = r.id || r.url;
                 const isSelected = selectedIds.has(rowId);
                 return (
-                  <tr key={rowId} className="border-t border-white/5 hover:bg-white/5">
-                    <td className="px-4 py-3">
+                  <tr key={rowId} className={`border-b border-white/5 transition-colors ${
+                    index % 2 === 0 ? 'bg-white/[0.02]' : 'bg-transparent'
+                  } hover:bg-white/[0.05]`}>
+                    <td className="px-5 py-4">
                       <input
                         type="checkbox"
                         checked={isSelected}
@@ -233,51 +235,51 @@ export default function ResultsTable({ onRefresh }: Props) {
                         className="w-4 h-4 rounded border-white/20 bg-white/10 text-[#16DB93] focus:ring-[#16DB93] focus:ring-offset-0 cursor-pointer"
                       />
                     </td>
-                    <td className="px-4 py-3">
-                    <div className="font-medium text-white">{r.nombre || 'Sin nombre'}</div>
-                    {r.error && <div className="text-xs text-[#598392] mt-1">{r.error}</div>}
-                    <a
-                      href={r.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-[#16DB93] hover:underline mt-1 inline-block"
-                    >
-                      Ver producto
-                    </a>
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <span className="font-semibold text-white">${r.precio ? formatPrice(r.precio) : '-'}</span>
-                  </td>
-                  <td className="px-4 py-3">
-                    {r.descuento ? (
-                      <span className="text-[#16DB93] font-medium">{r.descuento}</span>
-                    ) : (
-                      <span className="text-white/40">-</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-white/80">{r.proveedor}</td>
-                  <td className="px-4 py-3 text-white/70">{r.categoria || '-'}</td>
-                  <td className="px-4 py-3">
-                    {r.status === 'success' ? (
-                      <Badge variant="success" icon={CheckCircle2}>
-                        Exitoso
-                      </Badge>
-                    ) : (
-                      <Badge variant="error" icon={XCircle}>
-                        Error
-                      </Badge>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-xs text-white/60 whitespace-nowrap">
-                    {r.fechaScraping ? new Date(r.fechaScraping).toLocaleDateString('es-AR', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      year: '2-digit'
-                    }) : '-'}
-                  </td>
-                </tr>
-              );
-            })
+                    <td className="px-5 py-4">
+                      <div className="font-semibold text-white mb-1">{r.nombre || 'Sin nombre'}</div>
+                      {r.error && <div className="text-xs text-[#598392] mb-1">{r.error}</div>}
+                      <a
+                        href={r.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-[#16DB93] hover:text-[#16DB93]/80 transition-colors inline-flex items-center gap-1"
+                      >
+                        Ver producto
+                      </a>
+                    </td>
+                    <td className="px-5 py-4 whitespace-nowrap">
+                      <span className="font-bold text-white text-base">${r.precio ? formatPrice(r.precio) : '-'}</span>
+                    </td>
+                    <td className="px-5 py-4">
+                      {r.descuento ? (
+                        <span className="text-[#16DB93] font-semibold">{r.descuento}</span>
+                      ) : (
+                        <span className="text-white/30">-</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-white/80 font-medium">{r.proveedor}</td>
+                    <td className="px-5 py-4 text-white/60">{r.categoria || '-'}</td>
+                    <td className="px-5 py-4">
+                      {r.status === 'success' ? (
+                        <Badge variant="success" icon={CheckCircle2}>
+                          Exitoso
+                        </Badge>
+                      ) : (
+                        <Badge variant="error" icon={XCircle}>
+                          Error
+                        </Badge>
+                      )}
+                    </td>
+                    <td className="px-5 py-4 text-xs text-white/50 whitespace-nowrap font-medium">
+                      {r.fechaScraping ? new Date(r.fechaScraping).toLocaleDateString('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: '2-digit'
+                      }) : '-'}
+                    </td>
+                  </tr>
+                );
+              })
             )}
           </tbody>
         </table>
@@ -285,25 +287,26 @@ export default function ResultsTable({ onRefresh }: Props) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-white/5 pt-3">
-          <div className="text-sm text-white/60">
-            Página {currentPage} de {totalPages} ({totalCount} resultados totales)
+        <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
+          <div className="text-sm text-white/60 font-medium">
+            Página <span className="text-white">{currentPage}</span> de <span className="text-white">{totalPages}</span>
+            <span className="text-white/40 ml-2">({totalCount} resultados totales)</span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={!canPrevPage}
-              className="btn bg-white/10 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn bg-white/5 text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10"
             >
               <ChevronLeft className="h-4 w-4" />
-              Anterior
+              <span>Anterior</span>
             </button>
             <button
               onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
               disabled={!canNextPage}
-              className="btn bg-white/10 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn bg-white/5 text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10"
             >
-              Siguiente
+              <span>Siguiente</span>
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>

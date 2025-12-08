@@ -241,25 +241,25 @@ export default function URLManager({ onChange }: Props) {
   const canNextPage = currentPage < totalPages;
 
   return (
-    <div className="card flex h-full flex-col gap-4 p-4">
-      <div className="flex items-start justify-between gap-3">
+    <div className="card flex h-full flex-col gap-6 p-6">
+      <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-white/60">Paso 1</p>
-          <h3 className="text-lg font-semibold text-white">Agrega URLs</h3>
-          <p className="text-xs text-white/50 mt-1">
+          <p className="text-xs uppercase tracking-wider text-white/50 font-semibold mb-2">Paso 1</p>
+          <h3 className="text-xl font-bold text-white mb-1">Agrega URLs</h3>
+          <p className="text-sm text-white/60">
             {totalCount > 0 ? `${totalCount} URLs cargadas` : 'Comienza agregando URLs para scrapear'}
           </p>
         </div>
       </div>
 
       {/* Search and Filters */}
-      <div className="grid gap-3 md:grid-cols-[2fr,1fr]">
-        <div className="card bg-white/5 border border-white/10 px-4 py-3">
-          <p className="text-xs text-white/50 uppercase tracking-[0.2em] mb-1">Buscar</p>
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="card bg-white/[0.02] border border-white/10 px-5 py-4">
+          <p className="text-xs text-white/50 uppercase tracking-wider mb-3 font-semibold">Buscar URLs</p>
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
             <input
-              className="w-full rounded-lg border border-white/10 bg-black/40 py-2.5 pl-10 pr-10 text-sm text-white outline-none focus:border-[#16DB93]"
+              className="input w-full pl-10 pr-10"
               placeholder="Busca por URL exacta o parte de ella"
               value={searchTerm}
               onChange={(e) => {
@@ -270,19 +270,19 @@ export default function URLManager({ onChange }: Props) {
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
               >
                 <X className="h-4 w-4" />
               </button>
             )}
           </div>
-          <p className="text-[11px] text-white/40 mt-2">Solo filtra la lista, no agrega URLs nuevas.</p>
+          <p className="text-xs text-white/40 mt-2">Solo filtra la lista, no agrega URLs nuevas.</p>
         </div>
 
-        <div className="card bg-white/5 border border-white/10 px-4 py-3">
-          <p className="text-xs text-white/50 uppercase tracking-[0.2em] mb-1">Filtrar estado</p>
+        <div className="card bg-white/[0.02] border border-white/10 px-5 py-4">
+          <p className="text-xs text-white/50 uppercase tracking-wider mb-3 font-semibold">Filtrar estado</p>
           <select
-            className="w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white outline-none focus:border-[#16DB93]"
+            className="input w-full"
             value={statusFilter}
             onChange={(e) => {
               setStatusFilter(e.target.value);
@@ -295,16 +295,16 @@ export default function URLManager({ onChange }: Props) {
             <option value="done">Completadas</option>
             <option value="error">Con error</option>
           </select>
-          <p className="text-[11px] text-white/40 mt-2">Ajusta qué URLs ves en la tabla.</p>
+          <p className="text-xs text-white/40 mt-2">Ajusta qué URLs ves en la tabla.</p>
         </div>
       </div>
 
       {/* Add URLs */}
-      <div className="card bg-white/5 border border-white/10 p-4 flex flex-col gap-3">
-        <div className="flex items-center justify-between">
+      <div className="card bg-gradient-to-br from-[#16DB93]/[0.08] to-[#598392]/[0.05] border border-[#16DB93]/20 p-5 flex flex-col gap-4">
+        <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-white/60">Agregar URLs</p>
-            <p className="text-sm text-white/50">Pega una URL o importa varias desde archivo.</p>
+            <p className="text-xs uppercase tracking-wider text-[#16DB93] font-semibold mb-1">Agregar URLs</p>
+            <p className="text-sm text-white/70">Pega una URL o importa varias desde archivo.</p>
           </div>
           <div className="flex items-center gap-2">
             <input
@@ -317,25 +317,25 @@ export default function URLManager({ onChange }: Props) {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-xs text-[#16DB93] hover:text-[#16DB93] flex items-center gap-1"
+              className="btn bg-white/5 text-[#16DB93] hover:bg-white/10 flex items-center gap-2 border border-[#16DB93]/30 text-sm"
               disabled={loading}
             >
-              <Upload className="h-3 w-3" />
-              Subir archivo
+              <Upload className="h-4 w-4" />
+              <span className="hidden sm:inline">Subir archivo</span>
             </button>
           </div>
         </div>
 
-        <form onSubmit={addUrl} className="flex gap-2">
+        <form onSubmit={addUrl} className="flex gap-3">
           <input
-            className="flex-1 rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-[#16DB93] placeholder:text-white/40"
+            className="input flex-1"
             placeholder="Agregar una nueva URL para scrapear"
             value={newUrl}
             onChange={(e) => setNewUrl(e.target.value)}
           />
           <button
             type="submit"
-            className="btn bg-[#16DB93] text-white hover:bg-[#16DB93] px-4 flex items-center gap-2"
+            className="btn bg-gradient-to-r from-[#16DB93] to-[#598392] text-white shadow-lg shadow-[#16DB93]/25 px-6 flex items-center gap-2 font-semibold"
             disabled={loading}
             title="Agregar URL"
           >

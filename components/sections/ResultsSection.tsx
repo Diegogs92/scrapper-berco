@@ -6,10 +6,10 @@ type Props = {
 
 export default function ResultsSection({ onRefresh }: Props) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-white mb-2">Resultados del Scraping</h2>
-        <p className="text-white/70">
+    <div className="space-y-8">
+      <div className="section-header">
+        <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">Resultados del Scraping</h2>
+        <p className="text-white/60 text-base leading-relaxed">
           Visualiza todos los productos scrapeados con sus precios y detalles
         </p>
       </div>

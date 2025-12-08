@@ -26,7 +26,9 @@
       "Bash(git fetch:*)",
       "Bash(git restore:*)",
       "Bash(git pull:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(cmd.exe /c start \"\" \"https://console.firebase.google.com/v1/r/project/berco-661c8/firestore/indexes?create_composite=Ck5wcm9qZWN0cy9iZXJjby02NjFjOC9kYXRhYmFzZXMvKGRlZmF1bHQpL2NvbGxlY3Rpb25Hcm91cHMvcmVzdWx0YWRvcy9pbmRleGVzL18QARoJCgV1cmxJZBABGhEKDWZlY2hhU2NyYXBpbmcQAhoMCghfX25hbWVfXxAC\")",
+      "Bash(start:*)"
     ],
     "deny": [],
     "ask": []

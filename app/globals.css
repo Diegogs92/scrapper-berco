@@ -10,6 +10,26 @@
   --accent-strong: #598392;
   --error: #DB2B39;
   --foreground: #EEEEFF;
+
+  /* Spacing scale */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Border radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 * {
@@ -17,57 +37,126 @@
 }
 
 .theme-dark body {
-  background: radial-gradient(circle at 20% 20%, rgba(89, 131, 146, 0.15), transparent 35%),
-    radial-gradient(circle at 80% 0%, rgba(22, 219, 147, 0.10), transparent 30%),
-    var(--surface);
+  background: linear-gradient(135deg,
+    rgba(41, 51, 92, 1) 0%,
+    rgba(41, 51, 92, 0.95) 50%,
+    rgba(89, 131, 146, 0.15) 100%
+  ),
+  radial-gradient(circle at 10% 20%, rgba(22, 219, 147, 0.08), transparent 40%),
+  radial-gradient(circle at 90% 80%, rgba(89, 131, 146, 0.12), transparent 40%);
+  background-attachment: fixed;
   color: var(--foreground);
   min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .theme-light {
-  --surface: #EEEEFF;
+  --surface: #F5F7FA;
   --card: #ffffff;
-  --card-muted: #598392;
+  --card-muted: #E8EDF3;
   --accent: #16DB93;
   --accent-strong: #598392;
   --error: #DB2B39;
-  --foreground: #29335C;
+  --foreground: #1A202C;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.03);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 8px 10px -6px rgb(0 0 0 / 0.08);
 }
 
 .theme-light body {
-  background: radial-gradient(circle at 20% 20%, rgba(89, 131, 146, 0.10), transparent 35%),
-    radial-gradient(circle at 80% 0%, rgba(22, 219, 147, 0.08), transparent 30%),
-    var(--surface);
+  background: linear-gradient(135deg,
+    rgba(245, 247, 250, 1) 0%,
+    rgba(238, 238, 255, 0.8) 50%,
+    rgba(89, 131, 146, 0.05) 100%
+  ),
+  radial-gradient(circle at 10% 20%, rgba(22, 219, 147, 0.05), transparent 40%);
+  background-attachment: fixed;
   color: var(--foreground);
 }
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-white/10 bg-[rgba(255,255,255,0.08)] shadow-xl shadow-black/30 backdrop-blur transition-all duration-300;
+    @apply rounded-xl border shadow-lg backdrop-blur-sm transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.15),
+      0 2px 4px -1px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.2),
+      0 4px 6px -2px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all duration-200;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
   }
 
   .badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-all duration-200;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-all duration-200;
+    box-shadow: var(--shadow-sm);
   }
 
   .badge-success {
-    @apply badge bg-[#16DB93]/20 text-[#16DB93] border border-[#16DB93]/30;
+    @apply badge bg-[#16DB93]/15 text-[#16DB93] border-2 border-[#16DB93]/40;
   }
 
   .badge-error {
-    @apply badge bg-[#DB2B39]/20 text-[#DB2B39] border border-[#DB2B39]/30;
+    @apply badge bg-[#DB2B39]/15 text-[#DB2B39] border-2 border-[#DB2B39]/40;
   }
 
   .badge-warning {
-    @apply badge bg-[#598392]/20 text-[#598392] border border-[#598392]/30;
+    @apply badge bg-[#598392]/15 text-[#598392] border-2 border-[#598392]/40;
   }
 
   .badge-info {
-    @apply badge bg-[#598392]/20 text-[#598392] border border-[#598392]/30;
+    @apply badge bg-[#598392]/15 text-[#598392] border-2 border-[#598392]/40;
+  }
+
+  /* Table styles */
+  .table-container {
+    @apply rounded-lg overflow-hidden border;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Input styles */
+  .input {
+    @apply rounded-lg border px-4 py-2.5 text-sm transition-all duration-200;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .input:focus {
+    @apply outline-none ring-2 ring-[#16DB93]/30;
+    border-color: #16DB93;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Section headers */
+  .section-header {
+    @apply mb-6 pb-4 border-b;
+    border-color: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -80,81 +169,115 @@
 
 /* Light theme overrides for utility-heavy sections */
 .theme-light .card {
-  border-color: #cbd5e1;
   background: #ffffff;
-  color: #0f172a;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1), 0 1px 3px rgba(15, 23, 42, 0.05);
+  border-color: rgba(41, 51, 92, 0.12);
+  color: #1A202C;
+  box-shadow:
+    0 4px 6px -1px rgba(41, 51, 92, 0.08),
+    0 2px 4px -1px rgba(41, 51, 92, 0.04),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+.theme-light .card:hover {
+  border-color: rgba(41, 51, 92, 0.18);
+  box-shadow:
+    0 10px 15px -3px rgba(41, 51, 92, 0.12),
+    0 4px 6px -2px rgba(41, 51, 92, 0.06),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
 }
 
 .theme-light .bg-white\/5 {
-  background-color: rgba(15, 23, 42, 0.05) !important;
+  background-color: rgba(41, 51, 92, 0.03) !important;
 }
 .theme-light .bg-white\/10 {
-  background-color: rgba(15, 23, 42, 0.10) !important;
+  background-color: rgba(41, 51, 92, 0.06) !important;
 }
 .theme-light .bg-white\/20 {
-  background-color: rgba(15, 23, 42, 0.15) !important;
+  background-color: rgba(41, 51, 92, 0.10) !important;
 }
 .theme-light .bg-white\/30 {
-  background-color: rgba(15, 23, 42, 0.20) !important;
+  background-color: rgba(41, 51, 92, 0.15) !important;
 }
 .theme-light .hover\:bg-white\/5:hover {
-  background-color: rgba(15, 23, 42, 0.08) !important;
+  background-color: rgba(41, 51, 92, 0.05) !important;
 }
 .theme-light .hover\:bg-white\/10:hover {
-  background-color: rgba(15, 23, 42, 0.12) !important;
+  background-color: rgba(41, 51, 92, 0.08) !important;
+}
+.theme-light .hover\:bg-white\/20:hover {
+  background-color: rgba(41, 51, 92, 0.12) !important;
 }
 
 .theme-light .border-white\/10 {
-  border-color: rgba(15, 23, 42, 0.1) !important;
+  border-color: rgba(41, 51, 92, 0.12) !important;
+}
+.theme-light .border-white\/20 {
+  border-color: rgba(41, 51, 92, 0.18) !important;
 }
 
 .theme-light .text-white {
-  color: #0f172a !important;
+  color: #1A202C !important;
 }
 .theme-light .text-white\/90 {
-  color: rgba(15, 23, 42, 0.9) !important;
+  color: rgba(26, 32, 44, 0.9) !important;
 }
 .theme-light .text-white\/70 {
-  color: rgba(15, 23, 42, 0.7) !important;
+  color: rgba(26, 32, 44, 0.7) !important;
 }
 .theme-light .text-white\/60 {
-  color: rgba(15, 23, 42, 0.6) !important;
+  color: rgba(26, 32, 44, 0.6) !important;
 }
 .theme-light .text-white\/80 {
-  color: rgba(15, 23, 42, 0.8) !important;
+  color: rgba(26, 32, 44, 0.8) !important;
 }
 .theme-light .text-white\/50 {
-  color: rgba(15, 23, 42, 0.5) !important;
+  color: rgba(26, 32, 44, 0.5) !important;
 }
 .theme-light .text-white\/40 {
-  color: rgba(15, 23, 42, 0.4) !important;
+  color: rgba(26, 32, 44, 0.4) !important;
+}
+.theme-light .text-white\/30 {
+  color: rgba(26, 32, 44, 0.3) !important;
 }
 
 .theme-light input,
 .theme-light textarea,
 .theme-light select {
   background: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #cbd5e1 !important;
+  color: #1A202C !important;
+  border-color: rgba(41, 51, 92, 0.15) !important;
+}
+
+.theme-light input:focus,
+.theme-light textarea:focus,
+.theme-light select:focus {
+  border-color: #16DB93 !important;
+  box-shadow: 0 0 0 3px rgba(22, 219, 147, 0.1) !important;
 }
 
 .theme-light input::placeholder,
 .theme-light textarea::placeholder {
-  color: rgba(15, 23, 42, 0.4) !important;
+  color: rgba(26, 32, 44, 0.4) !important;
 }
 
 .theme-light table {
-  color: #0f172a;
+  color: #1A202C;
+}
+
+.theme-light .table-container {
+  border-color: rgba(41, 51, 92, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .theme-light .btn {
-  color: #0f172a;
+  color: #1A202C;
 }
-.theme-light .btn.bg-emerald-500,
-.theme-light .btn.bg-rose-500,
-.theme-light .btn.bg-rose-500\/80,
-.theme-light .btn.bg-emerald-500\/80 {
+
+.theme-light .btn.bg-\[#16DB93\] {
+  color: #ffffff !important;
+}
+
+.theme-light .btn.bg-\[#DB2B39\] {
   color: #ffffff !important;
 }
 
