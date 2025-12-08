@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import PriceComparison from '../PriceComparison';
+import ProductComparisonSelector from '../ProductComparisonSelector';
 import { TrendingUp, Package, DollarSign, AlertCircle } from 'lucide-react';
 import { ProgressTotals } from '@/types';
 
@@ -104,8 +104,8 @@ export default function StatsSection({ totals }: Props) {
         })}
       </div>
 
-      {/* Price Comparison */}
-      <PriceComparison />
+      {/* Product Comparison Selector */}
+      <ProductComparisonSelector />
     </div>
   );
 }

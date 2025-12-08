@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { ArrowLeft, Trash2, AlertTriangle } from 'lucide-react';
-import Link from 'next/link';
+import { Trash2, AlertTriangle } from 'lucide-react';
+import Navbar from '@/components/Navbar';
 
 function LimpiarSistemaContent() {
   const { token } = useAuth();
@@ -66,16 +66,15 @@ function LimpiarSistemaContent() {
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 p-6">
-      <div className="flex items-center gap-4">
-        <Link href="/dashboard" className="p-2 hover:bg-white/5 rounded-lg transition-colors">
-          <ArrowLeft className="h-6 w-6 text-white" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-semibold text-white">Limpiar Sistema</h1>
-          <p className="text-white/70 mt-1">Elimina información del scraper para comenzar de cero</p>
-        </div>
-      </div>
+    <main className="min-h-screen">
+      <div className="mx-auto w-full max-w-[1800px] p-6">
+        <Navbar activeSection="urls" onSectionChange={() => {}} />
+
+        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+          <div>
+            <h1 className="text-3xl font-semibold text-white">Limpiar Sistema</h1>
+            <p className="text-white/70 mt-1">Elimina información del scraper para comenzar de cero</p>
+          </div>
 
       {success && (
         <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 px-4 py-3 rounded-lg">
@@ -223,6 +222,8 @@ function LimpiarSistemaContent() {
           </div>
         </div>
       )}
+        </div>
+      </div>
     </main>
   );
 }

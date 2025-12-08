@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { User, UserRole } from '@/types';
-import { ArrowLeft, UserPlus, Shield, Settings, User as UserIcon, Pencil, Trash2, Loader2 } from 'lucide-react';
-import Link from 'next/link';
+import { UserPlus, Shield, Settings, User as UserIcon, Pencil, Trash2, Loader2 } from 'lucide-react';
+import Navbar from '@/components/Navbar';
 
 function AdminUsuariosContent() {
   const { token, user: currentUser } = useAuth();
@@ -206,19 +206,15 @@ function AdminUsuariosContent() {
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-6">
-      <div className="flex items-center gap-4">
-        <Link
-          href="/dashboard"
-          className="p-2 hover:bg-white/5 rounded-lg transition-colors"
-        >
-          <ArrowLeft className="h-6 w-6 text-white" />
-        </Link>
-        <div>
-          <h1 className="text-3xl font-semibold text-white">Administración de Usuarios</h1>
-          <p className="text-white/70 mt-1">Gestiona los usuarios del sistema</p>
-        </div>
-      </div>
+    <main className="min-h-screen">
+      <div className="mx-auto w-full max-w-[1800px] p-6">
+        <Navbar activeSection="urls" onSectionChange={() => {}} />
+
+        <div className="flex flex-col gap-6">
+          <div>
+            <h1 className="text-3xl font-semibold text-white">Administración de Usuarios</h1>
+            <p className="text-white/70 mt-1">Gestiona los usuarios del sistema</p>
+          </div>
 
       {success && (
         <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 px-4 py-3 rounded-lg">
@@ -528,6 +524,8 @@ function AdminUsuariosContent() {
           </div>
         </div>
       )}
+        </div>
+      </div>
     </main>
   );
 }
