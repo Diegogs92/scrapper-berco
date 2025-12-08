@@ -212,6 +212,41 @@ async function processSingleUrl(doc: FirebaseFirestore.QueryDocumentSnapshot) {
     await doc.ref.update({ status: 'processing', ultimoError: null });
     const result = await scrapeUrl(urlData.url, urlData.proveedor);
 
+    // Detectar cambios de precio respecto al último éxito
+    if (result.status === 'success' && result.precio > 0) {
+      const prevSnap = await db
+        .collection('resultados')
+        .where('urlId', '==', doc.id)
+        .orderBy('fechaScraping', 'desc')
+        .limit(1)
+        .get();
+
+      if (!prevSnap.empty) {
+        const prevData = prevSnap.docs[0].data();
+        const prevPrice = Number(prevData.precio) || 0;
+        if (prevPrice > 0 && Math.abs(result.precio - prevPrice) > 0.01) {
+          const delta = result.precio - prevPrice;
+          const deltaPct = prevPrice ? (delta / prevPrice) * 100 : 0;
+          result.precioAnterior = prevPrice;
+          result.cambioPrecio = delta;
+          result.cambioPorcentaje = Math.round(deltaPct * 100) / 100;
+
+          await db.collection('alerts').add({
+            urlId: doc.id,
+            url: result.url,
+            nombre: result.nombre,
+            proveedor: result.proveedor,
+            precioAnterior: prevPrice,
+            precioNuevo: result.precio,
+            delta,
+            deltaPorcentaje: result.cambioPorcentaje,
+            fecha: result.fechaScraping,
+            leida: false,
+          });
+        }
+      }
+    }
+
     await db.collection('resultados').add({
       ...result,
       urlId: doc.id,

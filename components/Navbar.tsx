@@ -5,8 +5,9 @@ import { Link2, FileText, Menu, X } from 'lucide-react';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 import UserMenu from './UserMenu';
+import PriceAlertsBadge from './PriceAlertsBadge';
 
-type NavSection = 'urls' | 'resultados';
+type NavSection = 'urls' | 'resultados' | 'evolucion';
 
 type Props = {
   activeSection: NavSection;
@@ -19,6 +20,7 @@ export default function Navbar({ activeSection, onSectionChange }: Props) {
   const navItems = [
     { id: 'urls' as NavSection, label: 'Agregar URLs', icon: Link2 },
     { id: 'resultados' as NavSection, label: 'Resultados', icon: FileText },
+    { id: 'evolucion' as NavSection, label: 'Evolución', icon: FileText },
   ];
 
   return (
@@ -60,6 +62,7 @@ export default function Navbar({ activeSection, onSectionChange }: Props) {
 
           {/* Right side actions */}
           <div className="flex items-center gap-3">
+            <PriceAlertsBadge onSelect={() => onSectionChange('evolucion')} />
             <ThemeToggle />
             <div className="hidden md:block">
               <UserMenu />

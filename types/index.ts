@@ -16,6 +16,9 @@ export interface ScrapeResult {
   url: string;
   nombre: string;
   precio: number;
+  precioAnterior?: number;
+  cambioPrecio?: number;
+  cambioPorcentaje?: number;
   descuento?: string;
   categoria?: string;
   proveedor: string;
@@ -111,4 +114,18 @@ export interface AuthSession {
   email: string;
   rol: UserRole;
   token: string;
+}
+
+export interface PriceAlert {
+  id?: string;
+  urlId: string;
+  url: string;
+  nombre: string;
+  proveedor: string;
+  precioAnterior: number;
+  precioNuevo: number;
+  delta: number;
+  deltaPorcentaje: number;
+  fecha: string;
+  leida?: boolean;
 }
