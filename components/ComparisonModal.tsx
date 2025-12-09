@@ -52,76 +52,68 @@ export default function ComparisonModal({ products, onClose }: Props) {
   const avgPrice = products.reduce((sum, p) => sum + p.precio, 0) / products.length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
       <div className="w-full max-w-6xl max-h-[90vh] overflow-y-auto">
-        <div className="bg-gradient-to-br from-[#0B0033] via-[#370031] to-[#0B0033] rounded-2xl border border-white/10 shadow-2xl">
+        <div className="bg-[#0B0033] rounded-xl border border-white/10 shadow-2xl">
           {/* Header */}
-          <div className="sticky top-0 bg-[#0B0033]/95 backdrop-blur-sm border-b border-white/10 px-6 py-4 rounded-t-2xl">
+          <div className="sticky top-0 bg-[#0B0033] border-b border-white/10 px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-white">Comparación de Precios</h2>
+                <h2 className="text-xl font-bold text-white">Comparación de Precios</h2>
                 <p className="text-sm text-white/60 mt-1">
                   {products.length} {products.length === 1 ? 'producto seleccionado' : 'productos seleccionados'}
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="w-8 h-8 flex items-center justify-center hover:bg-white/10 rounded-lg transition-colors"
                 aria-label="Cerrar"
               >
-                <X className="h-6 w-6 text-white/70 hover:text-white" />
+                <X className="h-5 w-5 text-white/70 hover:text-white" />
               </button>
             </div>
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 px-6 py-6 border-b border-white/5">
-            <div className="bg-gradient-to-br from-[#1EA896]/10 to-[#1EA896]/5 border border-[#1EA896]/20 rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#1EA896]/20 flex items-center justify-center">
-                  <Package className="h-5 w-5 text-[#1EA896]" />
-                </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 px-6 py-5 border-b border-white/10">
+            <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+              <div className="flex items-center gap-2">
+                <Package className="h-4 w-4 text-[#1EA896]" />
                 <div>
-                  <p className="text-xs text-emerald-200/60 uppercase tracking-wider">Productos</p>
-                  <p className="text-xl font-bold text-white">{groups.length}</p>
+                  <p className="text-xs text-white/50 uppercase">Productos</p>
+                  <p className="text-lg font-bold text-white">{groups.length}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                  <Store className="h-5 w-5 text-blue-400" />
-                </div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+              <div className="flex items-center gap-2">
+                <Store className="h-4 w-4 text-blue-400" />
                 <div>
-                  <p className="text-xs text-blue-200/60 uppercase tracking-wider">Proveedores</p>
-                  <p className="text-xl font-bold text-white">{totalProviders}</p>
+                  <p className="text-xs text-white/50 uppercase">Proveedores</p>
+                  <p className="text-lg font-bold text-white">{totalProviders}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                  <DollarSign className="h-5 w-5 text-purple-400" />
-                </div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+              <div className="flex items-center gap-2">
+                <DollarSign className="h-4 w-4 text-purple-400" />
                 <div>
-                  <p className="text-xs text-purple-200/60 uppercase tracking-wider">Precio Promedio</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className="text-xs text-white/50 uppercase">Promedio</p>
+                  <p className="text-lg font-bold text-white">
                     ${formatPrice(avgPrice)}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[#FF715B]/10 to-amber-600/5 border border-[#FF715B]/20 rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#FF715B]/20 flex items-center justify-center">
-                  <TrendingDown className="h-5 w-5 text-[#FF715B]" />
-                </div>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+              <div className="flex items-center gap-2">
+                <TrendingDown className="h-4 w-4 text-[#FF715B]" />
                 <div>
-                  <p className="text-xs text-amber-200/60 uppercase tracking-wider">Ahorro Total</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className="text-xs text-white/50 uppercase">Ahorro</p>
+                  <p className="text-lg font-bold text-white">
                     ${formatPrice(totalSavings)}
                   </p>
                 </div>
@@ -130,12 +122,12 @@ export default function ComparisonModal({ products, onClose }: Props) {
           </div>
 
           {/* Comparison List */}
-          <div className="px-6 py-6 space-y-6">
+          <div className="px-6 py-5 space-y-4">
             {groups.map((group, idx) => (
-              <div key={idx} className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+              <div key={idx} className="bg-black/20 rounded-lg border border-white/10 overflow-hidden">
                 {/* Product Header */}
                 <div className="bg-white/5 px-4 py-3 border-b border-white/10">
-                  <h3 className="text-base font-semibold text-white">{group.nombre}</h3>
+                  <h3 className="text-sm font-semibold text-white">{group.nombre}</h3>
                   {group.hasMultipleProviders && (
                     <div className="flex items-center gap-2 mt-1 text-xs text-white/60">
                       <span>{group.items.length} proveedores</span>
@@ -162,7 +154,7 @@ export default function ComparisonModal({ products, onClose }: Props) {
                       key={item.id || item.url}
                       className={`px-4 py-3 flex items-center justify-between hover:bg-white/5 transition-colors ${
                         itemIdx === 0 && group.hasMultipleProviders
-                          ? 'bg-[#1EA896]/5'
+                          ? 'bg-[#1EA896]/10'
                           : ''
                       }`}
                     >
@@ -170,7 +162,7 @@ export default function ComparisonModal({ products, onClose }: Props) {
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-white">{item.proveedor}</span>
                           {itemIdx === 0 && group.hasMultipleProviders && (
-                            <span className="px-2 py-0.5 text-xs bg-[#1EA896]/20 text-[#1EA896] border border-[#1EA896]/30 rounded-full font-medium">
+                            <span className="px-2 py-0.5 text-xs bg-[#1EA896]/20 text-[#1EA896] rounded-md font-medium">
                               Mejor precio
                             </span>
                           )}
@@ -190,14 +182,14 @@ export default function ComparisonModal({ products, onClose }: Props) {
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-3">
                         <div className="text-right">
-                          <div className="text-xl font-bold text-white">
+                          <div className="text-lg font-bold text-white">
                             ${formatPrice(item.precio)}
                           </div>
                           {itemIdx > 0 && group.hasMultipleProviders && (
-                            <div className="text-xs text-[#DB2B39] font-medium">
-                              +${formatPrice(item.precio - group.minPrecio)} más caro
+                            <div className="text-xs text-[#FF715B] font-medium">
+                              +${formatPrice(item.precio - group.minPrecio)} más
                             </div>
                           )}
                         </div>
@@ -205,7 +197,7 @@ export default function ComparisonModal({ products, onClose }: Props) {
                           href={item.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-2 bg-[#1EA896]/10 hover:bg-[#1EA896]/20 text-[#1EA896] text-sm font-medium rounded-lg border border-[#1EA896]/30 transition-colors"
+                          className="px-3 py-2 bg-[#1EA896] hover:bg-[#147a6a] text-white text-sm font-medium rounded-lg transition-colors"
                         >
                           Ver
                         </a>
@@ -218,11 +210,11 @@ export default function ComparisonModal({ products, onClose }: Props) {
           </div>
 
           {/* Footer */}
-          <div className="sticky bottom-0 bg-[#0B0033]/95 backdrop-blur-sm border-t border-white/10 px-6 py-4 rounded-b-2xl">
+          <div className="sticky bottom-0 bg-[#0B0033] border-t border-white/10 px-6 py-4">
             <div className="flex justify-end">
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg transition-colors"
+                className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-white font-medium rounded-lg transition-colors"
               >
                 Cerrar
               </button>
